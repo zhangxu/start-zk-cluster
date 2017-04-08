@@ -11,7 +11,7 @@ name_prefix=zoo
 listening_port=2888
 election_port=3888
 network=zoo
-labels="--label inside-zoo=yes"
+labels="--label zookeeper=yes"
 
 gen_cfg() {
     cp ./zoo.cfg.template ./zoo.cfg
@@ -44,8 +44,8 @@ start_zk_containers() {
                -p ${client_port} \
                --network $network \
                --name "$name" \
-               "$image" \
                $labels \
+               "$image" \
                zkServer.sh start-foreground
 
         docker port $name |grep -E -o "([0-9]+)$"
