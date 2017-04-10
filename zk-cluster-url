@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-client_port=`grep clientPort zoo.cfg|cut -d "=" -f 2`
+script_dir=$(dirname $(readlink -e $BASH_SOURCE))
+
+client_port=`grep clientPort ${script_dir}/zoo.cfg|cut -d "=" -f 2`
 
 host_ip=`hostname -i`
 

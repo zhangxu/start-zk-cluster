@@ -47,8 +47,6 @@ start_zk_containers() {
                $labels \
                "$image" \
                zkServer.sh start-foreground
-
-        docker port $name |grep -E -o "([0-9]+)$"
     done
 }
 
