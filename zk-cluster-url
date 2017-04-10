@@ -12,4 +12,4 @@ url=$(for container in `docker ps -q --filter "label=zookeeper=yes"`; do
     grep -E "^$client_port/tcp" <<<$(docker port $container) | grep -oE "[0-9]+$" | xargs -I {} echo -n "$host_ip:{},"
 done)
 
-sed 's|,$|/|' <<<$url
+sed 's|,$||' <<<$url
