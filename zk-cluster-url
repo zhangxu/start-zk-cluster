@@ -6,10 +6,14 @@ client_port=`grep clientPort ${script_dir}/zoo.cfg|cut -d "=" -f 2`
 
 host_ip=`hostname -i`
 
-echo -n "zk://"
-
 url=$(for container in `docker ps -q --filter "label=zookeeper=yes"`; do
     grep -E "^$client_port/tcp" <<<$(docker port $container) | grep -oE "[0-9]+$" | xargs -I {} echo -n "$host_ip:{},"
 done)
 
+if [[ "$url" == "" ]]; then
+  echo "No running zookeeper cluster" >&2
+  exit 1
+fi
+
+echo -n "zk://"
 sed 's|,$||' <<<$url
